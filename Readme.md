@@ -6,6 +6,10 @@ This is my config file with all needed for my work
 - install **Plug**, plugin manager ([Download plug.vim](https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim) and put it in the "autoload" directory.) 
 - get local copy of repo, or copy only content from **init.vim**
 - for using config file, copy **init.vim** to **~/.config/nvim** folder, or copied content to ********~/.config/nvim/init.vim********
+- need to install (for Fedora)
+  - sudo dnf install powerline-fonts
+  - sudo dnf install fira-code-fonts
+  for other linux distibutives need the same fonts, search by name
 ## Plugins
 Used plugins in config for nvim with short description and shortcuts for plugins.
 - Keithbsmiley/rspec.vim 
