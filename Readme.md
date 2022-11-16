@@ -9,6 +9,7 @@ This is my config file with all needed for my work
 - need to install (for Fedora)
   - sudo dnf install powerline-fonts
   - sudo dnf install fira-code-fonts
+  - need to download from [DroidFonts](https://www.nerdfonts.com/font-downloads) what you like. I download and install Fira patched font. 
   for other linux distibutives need the same fonts, search by name
 ## Plugins
 Used plugins in config for nvim with short description and shortcuts for plugins.
