@@ -65,6 +65,9 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'vim-syntastic/syntastic'
   Plug 'xolox/vim-misc'
   Plug 'xolox/vim-notes'
+  " tabs for vim
+  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'romgrk/barbar.nvim'
 call plug#end()
 
 colorscheme gruvbox
@@ -212,3 +215,17 @@ let g:terraform_completion_keys = 1
 
 " (Optional) Default: 1, enable(1)/disable(0) terraform module registry completion
 let g:terraform_registry_module_completion = 0
+
+" tab options
+let bufferline = get(g:, 'bufferline', {})
+let bufferline.auto_hide = v:false
+let bufferline.tabpages = v:true
+let bufferline.closable = v:true
+let bufferline.clickable = v:true
+let bufferline.icons = v:true
+let bufferline.icon_separator_active = '▎'
+let bufferline.icon_separator_inactive = '▎'
+let bufferline.icon_close_tab = ''
+let bufferline.icon_close_tab_modified = '●'
+let bufferline.icon_pinned = '車'
+
