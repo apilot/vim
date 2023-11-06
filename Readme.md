@@ -144,9 +144,9 @@ Used plugins in config for nvim with short description and shortcuts for plugins
 
 > colorscheme ``gruvbox``
 
-> g:mapleader='``\``' 
+> g:mapleader='``SPACE``' 
 
-> ``<C-n>`` :NERDTreeToggle<CR>
+> ``<Leader-e>`` :NERDTreeToggle<CR>
 
 > ``<C-h>`` :call WinMove('h')<CR>
 
