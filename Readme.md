@@ -13,6 +13,10 @@ This is my config file with all needed for my work
   for other linux distibutives need the same fonts, search by name
 ## Plugins
 Used plugins in config for nvim with short description and shortcuts for plugins.
+- tbodt/deoplete-tabnine
+  > Deoplete plugin for TabNine AI
+- codota/tabnine-nvim
+  > Standalone TabNine integration for nvim
 - Keithbsmiley/rspec.vim 
   > *This provides improved syntax highlighting for rspec.*
 - Shougo/deoplete.nvim
@@ -25,7 +29,7 @@ Used plugins in config for nvim with short description and shortcuts for plugins
   > *This plugin is used for displaying thin vertical lines at each indentation level for code indented with spaces*
 - airblade/vim-gitgutter
   > *A Vim plugin which shows a git diff in the sign column*
-- ajh17/VimCompletesMe 
+- vim-scripts/VimCompletesMe 
   > *A super simple, super minimal, super light-weight tab-completion plugin for Vim.*
 - alvan/vim-closetag 
   > *The current content: ``<table| Now you press >``, the content will be: ``<table>|</table>``*
@@ -69,8 +73,8 @@ Used plugins in config for nvim with short description and shortcuts for plugins
   > *This project adds CoffeeScript support to vim.*
 - kien/ctrlp.vim
   > *Full path fuzzy file, buffer, mru, tag, ... finder for Vim (by press Ctrl + p)*
-- majutsushi/tagbar
-  > *Tagbar is a Vim plugin that provides an easy way to browse the tags of the current file and get an overview of its structure (press F8)*
+- romgrk/barbar.nvim
+  > *Barbar is a Vim plugin that provides an easy way to browse the tags of the current file and get an overview of its structure (press F8)*
 - mfussenegger/nvim-lint 
   > *An asynchronous linter plugin for Neovim (>= 0.6.0) complementary to the built-in Language Server Protocol support.*
 - morhetz/gruvbox
@@ -131,6 +135,10 @@ Used plugins in config for nvim with short description and shortcuts for plugins
   > *add commentary*
 - iamcco/markdown-preview.nvim
   > *Preview markdown on your modern browser with synchronised scrolling and flexible configuration. For activate: **:MarkdownPreview** for disable: **:MarkdownPreviewStop***
+- nvim-telescope/telescope.nvim
+  > highly extendable fuzzy finder over lists. Built on the latest awesome features from neovim core. Telescope is centered around modularity, allowing for easy customization.
+- liuchengxu/vim-which-key
+  > displays available keybindings in popup
 
 ## Theme and hotkeys
 
