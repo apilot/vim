@@ -12,8 +12,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'Shougo/neosnippet-snippets'
   Plug 'Shougo/neosnippet.vim'
   Plug 'SirVer/ultisnips'
-  Plug 'Yggdroot/indentLine'
-  Plug 'airblade/vim-gitgutter'
+  Plug 'lukas-reineke/indent-blankline.nvim'
+  Plug 'lewis6991/gitsigns.nvim'
   Plug 'vim-scripts/VimCompletesMe'
   Plug 'alvan/vim-closetag'
   Plug 'ap/vim-css-color'
@@ -39,6 +39,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'majutsushi/tagbar'              " Class/module browser
   Plug 'mfussenegger/nvim-lint'
   Plug 'morhetz/gruvbox'
+  Plug 'lifepillar/vim-gruvbox8'
+  Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
   Plug 'sainnhe/sonokai'
   Plug 'mustache/vim-mustache-handlebars'
   Plug 'mxw/vim-jsx', { 'for': 'javascript.jsx' }
@@ -51,10 +53,13 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'rhysd/vim-grammarous'
   Plug 'rking/ag.vim'
   Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle' }            " Project and file navigation
+  Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'slim-template/vim-slim'
   Plug 'stephpy/vim-yaml'
   Plug 'thinca/vim-localrc'
-  Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
+  Plug 'antoinemadec/FixCursorHold.nvim'
+  Plug 'nvim-neotest/neotest'
+  Plug 'olimorris/neotest-rspec'
   Plug 'tpope/vim-commentary'
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'tpope/vim-endwise'
@@ -73,17 +78,20 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'romgrk/barbar.nvim'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-tree/nvim-web-devicons'
+  Plug 'https://github.com/ryanoasis/vim-devicons'
   Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4' }
   Plug 'liuchengxu/vim-which-key'
-  Plug 'frazrepo/vim-rainbow'
+  Plug 'luochen1990/rainbow'
   Plug 'codota/tabnine-nvim', { 'do': './dl_binaries.sh' }
+  Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+  set encoding=UTF-8
 call plug#end()
 
-colorscheme gruvbox
-"let g:sonokai_style = 'andromeda'
+colorscheme catppuccin-mocha
 set background=dark
 syntax on
-set guifont=Fira\ Code\ Light:h16
+set guifont=Fira\ Code\ Light:h11
+set clipboard+=unnamedplus
 let g:mapleader=' '
 
 let g:python3_host_prog = '/usr/bin/python'
@@ -92,9 +100,9 @@ set tabstop=2
 set incsearch
 set hlsearch
 set cursorline
-highlight CursorLine ctermbg=black blend=50
-highlight CursorColumn ctermbg=black blend=50
 set cursorcolumn
+highlight CursorLine ctermbg=235 guibg=#28303d
+highlight CursorColumn ctermbg=122 guibg=#28303d
 set nu "Отображать номеe астрок
 set sw=2 "Заменяет TAB на 2 пробела
 set sts=2 "Аналогично, но в случае автоотступа
@@ -106,6 +114,42 @@ autocmd FileType TelescopePrompt call deoplete#custom#buffer_option('auto_comple
 let g:anyfold_fold_comments=1
 set foldlevel=0
 
+
+" air-line
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+" airline symbols                                                                                                                              
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:WebDevIconsUnicodeDecorateFolderNodeDefaultSymbol = ''
+
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['nerdtree'] = ''
+
 "mappings
 map <Leader>e :NERDTreeToggle<CR>
 map <silent> <C-h> :call WinMove('h')<CR>
@@ -113,15 +157,6 @@ map <silent> <C-j> :call WinMove('j')<CR>
 map <silent> <C-k> :call WinMove('k')<CR>
 map <silent> <C-l> :call WinMove('l')<CR>
 nmap <F8> :TagbarToggle<CR>
-"telescope find binds
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>fc <cmd>Telescope help_tags<cr>
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-
-nnoremap <silent> <leader>gg :LazyGit<CR>
 function! WinMove(key)
   let t:curwin = winnr()
   exec 'wincmd '.a:key
@@ -135,19 +170,160 @@ function! WinMove(key)
   endif
 endfunction
 
-let g:indentLine_setColors = 0
-let g:indentLine_color_term = 239
-let g:indentLine_char = '⦙'
 let g:tagbar_ctags_bin = '/usr/bin/ctags'
 
 
 let g:airline_powerline_fonts = 1 "Включить поддержку Powerline шрифтов
 let g:airline#extensions#keymap#enabled = 0 "Не показывать текущий маппинг
-let g:airline_section_z = "\ue0a1:%l/%L Col:%c" "Кастомная графа положения курс>
 let g:Powerline_symbols='unicode' "Поддержка unicode
 let g:airline#extensions#xkblayout#enabled = 0 "Про это позже расскажу
-let g:airline_theme='base16'
-let g:rainbow_active = 1
+let g:airline_theme= 'deus'
+
+
+
+" let g:NERDTreeHighlightFolders = 1
+let g:NERDTreeHighlightFoldersFullName = 1
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1 " enable folder glyph flag
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:DevIconsEnableFolderExtensionPatternMatching = 1
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:webdevicons_enable_nerdtree = 1
+let g:NERDTreeGitStatusUseNerdFonts = 1
+let g:NERDTreeGitStatusConcealBrackets = 1
+" Basically disable nerdtree markers
+let g:NERDTreeDirArrowExpandable = ' '
+let g:NERDTreeDirArrowCollapsible = ' '
+let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1
+let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
+let g:WebDevIconsUnicodeGlyphDoubleWidth = 0
+
+" nerdtree git plugin begins
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+    \ "Modified"  : "",
+    \ "Staged"    : "",
+    \ "Untracked" : "",
+    \ "Renamed"   : "",
+    \ "Unmerged"  : "",
+    \ "Deleted"   : "",
+    \ "Dirty"     : "",
+    \ "Clean"     : "",
+    \ "Unknown"   : ""
+    \}
+" nerdtree git plugin ends
+
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ' '
+let g:DevIconsDefaultFolderOpenSymbol = ' '
+
+call which_key#register('<Space>', "g:which_key_map", 'n')
+call which_key#register('<Space>', "g:which_key_map_visual", 'v')
+
+"telescope find binds
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fc <cmd>Telescope current_buffer_fuzzy_find <cr>
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+
+nnoremap <silent> <leader>gg :LazyGit<CR>
+nnoremap <silent> <leader>gb :Gitsigns blame_line<CR>
+nnoremap <silent> <leader>gr :Gitsigns reset_hunk<CR>
+
+nnoremap <silent> <Leader>do :lopen<CR>
+nnoremap <silent> <Leader>dc :lclose<CR>
+nnoremap <silent><leader>q :BufferClose<CR>
+let g:which_key_map =  {}
+
+let g:which_key_map['d'] = {
+  \ 'name' : '+debug',
+  \ 'o' : [':lopen'     , 'Open debug panel'],
+  \ 'c' : [':lclose'     , 'Close debug panel'],
+\}
+
+let g:which_key_map['q'] = [ ':BufferClose', 'Close buffer' ]
+let g:which_key_map['f'] = {
+  \ 'name' : '+telescope',
+  \ 'f' : [':Telescope find_files'     , 'Find files'],
+  \ 'g' : [':Telescope live_grep'     , 'Global text search'],
+  \ 'b' : [':Telescope buffers'     , 'Buffers list'],
+  \ 'h' : [':Telescope help_tags'     , 'Find help tags'],
+  \ 'c' : [':Telescope current_buffer_fuzzy_find'     , 'Buffer text search'],
+\}
+
+let g:which_key_map['p'] = {
+      \ 'name' : '+plug' ,
+      \ 'i' : [':PlugInstall'              , 'install'],
+      \ 'u' : [':PlugUpdate'               , 'update'],
+      \ 'c' : [':PlugClean'                , 'clean'],
+      \ 's' : [':source ~/.config/nvim/init.vim', 'source vimrc'],
+      \ }
+
+let g:which_key_map['z'] = {
+  \ 'name' : '+Follding',
+  \ 'o' : ['zo'     , 'Expand'],
+  \ 'O' : ['zO'     , 'Expand all'],
+  \ 'c' : ['zc'     , 'Collapse'],
+\}
+
+let g:which_key_map['g'] = {
+  \ 'name' : '+Git',
+  \ 'g' : [':LazyGit'     , 'LazyGit'],
+  \ 'b' : [':Gitsigns blame_line'     , 'Blame line'],
+  \ 'r' : [':Gitsigns reset_hunk'     , 'Reset hunk'],
+\}
+
+
+let g:which_key_map['w'] = {
+      \ 'name' : '+windows' ,
+      \ 'w' : ['<C-W>w'     , 'other-window']          ,
+      \ 'd' : ['<C-W>c'     , 'delete-window']         ,
+      \ '-' : ['<C-W>s'     , 'split-window-below']    ,
+      \ '|' : ['<C-W>v'     , 'split-window-right']    ,
+      \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
+      \ 'h' : ['<C-W>h'     , 'window-left']           ,
+      \ 'j' : ['<C-W>j'     , 'window-below']          ,
+      \ 'l' : ['<C-W>l'     , 'window-right']          ,
+      \ 'k' : ['<C-W>k'     , 'window-up']             ,
+      \ 'f' : [':tabedit %' , 'Fullscreen']            ,
+      \ 'm' : [':tabclose'  , 'Split view']            ,
+      \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
+      \ 'J' : [':resize +5' , 'expand-window-below']   ,
+      \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
+      \ 'K' : [':resize -5' , 'expand-window-up']      ,
+      \ '=' : ['<C-W>='     , 'balance-window']        ,
+      \ 's' : ['<C-W>s'     , 'split-window-below']    ,
+      \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
+      \ }
+
+let g:which_key_map.l = {
+      \ 'name' : '+lsp',
+      \ 'f' : ['spacevim#lang#util#Format()'          , 'formatting']       ,
+      \ 'r' : ['spacevim#lang#util#FindReferences()'  , 'references']       ,
+      \ 'R' : ['spacevim#lang#util#Rename()'          , 'rename']           ,
+      \ 's' : ['spacevim#lang#util#DocumentSymbol()'  , 'document-symbol']  ,
+      \ 'S' : ['spacevim#lang#util#WorkspaceSymbol()' , 'workspace-symbol'] ,
+      \ 'g' : {
+        \ 'name': '+goto',
+        \ 'd' : ['spacevim#lang#util#Definition()'     , 'definition']      ,
+        \ 't' : ['spacevim#lang#util#TypeDefinition()' , 'type-definition'] ,
+        \ 'i' : ['spacevim#lang#util#Implementation()' , 'implementation']  ,
+        \ },
+      \ }
+let g:which_key_map['r'] = {
+  \ 'name' : '+rspec',
+  \ 'r' : [':Neotest run file', 'Run Nearest test in file']        ,
+  \ 'l' : [':Neotest run last', 'Run Last test']                   ,
+  \ 'a' : [':Neotest attach', 'Attach Nearest test']               ,
+  \ 'o' : [':Neotest output', 'Neotest output']                    ,
+  \ 's' : [':Neotest summary toggle', 'Neotest summary']           ,
+  \ 'S' : [':Neotest stop', 'Neotest stop']                        ,
+  \ 'p' : [':Neotest output-panel toggle', 'Output panel toggle']  ,
+    \ 'j' : {
+  \ 'name' : '+jump',
+  \ 'n' : [':Neotest jump next', 'Jump next']                      ,
+  \ 'p' : [':Neotest jump prev', 'Jump prev']                      ,
+  \},
+\}
 
 set mouse=n
 " filenames like *.xml, *.html, *.xhtml, ...
@@ -194,9 +370,7 @@ let g:deoplete#enable_at_startup = 1
 
 " execute pathogen#infect()
 syntax on
-filetype plugin indent on
-
-nmap <leader>rc :call RubocopAutoFix()<CR>
+" filetype plugin indent on
 
 " Enable snipMate compatibility feature.
 let g:neosnippet#enable_snipmate_compatibility = 1
@@ -255,8 +429,6 @@ let g:LanguageClient_serverCommands = {
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-nnoremap <silent> <Leader>do :lopen<CR>
-nnoremap <silent> <Leader>dc :lclose<CR>
 
 " tab options
 let g:barbar_auto_setup = v:false
@@ -312,4 +484,62 @@ configs.setup {
     -- termcolors = {} -- table of colour name strings
   }
 }
+require('gitsigns').setup()
+require("ibl").setup()
+require("neotest").setup({
+  adapters = {
+    require("neotest-rspec")({
+      rspec_cmd = function()
+        return vim.tbl_flatten({
+          "bundle",
+          "exec",
+          "rspec",
+        })
+      end
+    }),
+  },
+})
 EOF
+
+
+if exists('g:loaded_webdevicons')
+    call webdevicons#refresh()
+endif
+let g:rainbow_conf = {
+\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+\	'guis': [''],
+\	'cterms': [''],
+\	'operators': '_,_',
+\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\	'separately': {
+\		'*': {},
+\		'markdown': {
+\			'parentheses_options': 'containedin=markdownCode contained',
+\		},
+\		'lisp': {
+\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+\		},
+\		'haskell': {
+\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'],
+\		},
+\		'vim': {
+\			'parentheses_options': 'containedin=vimFuncBody',
+\		},
+\		'perl': {
+\			'syn_name_prefix': 'perlBlockFoldRainbow',
+\		},
+\		'stylus': {
+\			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'],
+\		},
+\		'css': 0,
+\		'nerdtree': 0,
+\	}
+\}
+
+let g:rainbow_active = 1
+
+autocmd VimEnter * NERDTree
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
